@@ -138,7 +138,7 @@ describe('Cart', () => {
     it('should apply quantity discount for even quantities', () => {
       const condition = {
         quantity: 2,
-      }
+      };
 
       cart.add({
         product,
@@ -152,7 +152,7 @@ describe('Cart', () => {
     it('should NOT apply quantity discount for even quantities when condition is not met', () => {
       const condition = {
         quantity: 2,
-      }
+      };
 
       cart.add({
         product,
@@ -172,6 +172,25 @@ describe('Cart', () => {
         product,
         quantity: 5,
         condition
+      });
+
+      expect(cart.getTotal().getAmount()).toEqual(106164);
+    });
+
+    it('should receive two or more conditions and determine/apply the best discount. First case', () => {
+      const condition1 = {
+        percentage: 30,
+        minimum: 2
+      };
+
+      const condition2 = {
+        quantity: 2,
+      };
+
+      cart.add({
+        product,
+        quantity: 5,
+        condition: [condition1, condition2]
       });
 
       expect(cart.getTotal().getAmount()).toEqual(106164);
